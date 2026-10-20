@@ -1,0 +1,44 @@
+error trace-error.log
+yes
+message trace-msg.log
+yes
+picture off
+quit
+bfname uflow_tr
+title well in uniform flow, WhAEM verification 1.1
+aquifer
+perm 10
+thick 10
+por 0.2
+reference 0 0 100
+uniflow 1 0
+quit
+well
+discharge
+0 0 50 1
+quit
+solve
+grid
+wind -200 -100 25 100
+quit
+trace
+step 0.1
+time 300
+point
+-200 0 5
+q
+go
+time 3000
+point
+c
+point
+7.9 0 5
+8.0 0 5
+0 12.4 5
+0 -12.4 5
+0 12.6 5
+0 -12.6 5
+q
+go
+quit
+stop
