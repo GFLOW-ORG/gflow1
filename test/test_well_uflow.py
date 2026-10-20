@@ -71,15 +71,15 @@ class TestRun:
         at the well (0, 0) with head 100; inside the well radius the potential
         is evaluated at the well radius.
         """
-        # Parameters from test/data/well_uflow.dat. Units are feet and days;
-        # the window coordinates (x, y) are in ft as well.
-        k = 10.0  # hydraulic conductivity, perm [ft/day]
-        H = 10.0  # aquifer thickness, thick [ft]
-        Q0 = 1.0  # uniform flow rate in the x-direction, uniflow [ft^2/day]
-        Q = 50.0  # well discharge [ft^3/day]
-        rw = 1.0  # well radius [ft]
-        href = 100.0  # head at the reference point (0, 0) [ft]
-        T = k * H  # transmissivity [ft^2/day]
+        # Parameters from test/data/well_uflow.dat. Units are meters and days,
+        # as in Haitjema, "WhAEM Verifications", section 1.1.
+        k = 10.0  # hydraulic conductivity, perm [m/d]
+        H = 10.0  # aquifer thickness, thick [m]
+        Q0 = 1.0  # uniform flow rate in the x-direction, uniflow [m^2/d]
+        Q = 50.0  # well discharge [m^3/d]
+        rw = 1.0  # well radius [m]
+        href = 100.0  # head at the reference point (0, 0) [m]
+        T = k * H  # transmissivity [m^2/d]
 
         # Read the Surfer ASCII grid (DSAA). Values are stored row by row,
         # starting at ymin, with nx values per row.
@@ -95,6 +95,6 @@ class TestRun:
         r = np.maximum(np.hypot(xx, yy), rw)
         expected = (-Q0 * xx + Q / (2.0 * np.pi) * np.log(r / rw)) / T + href
 
-        # GFLOW writes heads with 4 decimals, so allow for rounding [ft].
+        # GFLOW writes heads with 4 decimals, so allow for rounding [m].
         max_error = np.abs(heads - expected).max()
         assert max_error < 1.0e-3
